@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.vbazurtob.hrrecruitapp.rest.lib.common.RecordAlreadyExists;
 import org.vbazurtob.hrrecruitapp.rest.model.ApplicantWithPassword;
 import org.vbazurtob.hrrecruitapp.rest.model.ApplicantWithoutPassword;
 import org.vbazurtob.hrrecruitapp.rest.model.NewApplicantForm;
@@ -57,7 +58,9 @@ public class ApplicantRestController {
 
     ){
 
-
+        if ( applicantService.usernameExists(postApplicant.getUsername()) ){
+            throw new RecordAlreadyExists("Username " + postApplicant.getUsername() + " already exists in db. " );
+        }
 
         ApplicantWithPassword newApplicant = applicantService.createNewApplicantInDB(postApplicant.getUsername(), postApplicant.getPassword(), postApplicant.getEmail());
         return ResponseEntity.created(URI.create( ROOT_API + REST_APPLICANT_CNTROLLER  + "/" + newApplicant.getUsername() ) ).build();

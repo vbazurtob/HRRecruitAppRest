@@ -18,7 +18,7 @@ public class ApplicantService {
 	protected BCryptPasswordEncoder bcryptEncoder;
 	
 
-	public void updateApplicantProfile(ApplicantBaseClass applicantFormData) {
+	public ApplicantBaseClass updateApplicantProfile(ApplicantBaseClass applicantFormData) {
 		
 		ApplicantWithPassword applicantDB = applicantRepository.findOneByUsername(applicantFormData.getUsername());
 		
@@ -34,7 +34,7 @@ public class ApplicantService {
 		applicantDB.setZipcode(applicantFormData.getZipcode());
 		applicantDB.setEmail(applicantFormData.getEmail());
 		
-		applicantRepository.save(applicantDB);
+		return applicantRepository.save(applicantDB);
 		
 	}
 	

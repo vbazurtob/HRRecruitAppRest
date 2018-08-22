@@ -13,7 +13,9 @@ public interface ControllerEndpoints {
 	final static String APPLICANT_STATUS_SERVICE = "/status-svc";
 	final static String APPLICANT_GET_BY_USERNAME = "/{username}";
 	final static String APPLICANT_NEW = "/new";
-
+	final static String APPLICANT_UPDATE =  APPLICANT_GET_BY_USERNAME;
+	final static String APPLICANT_DELETE =  APPLICANT_GET_BY_USERNAME;
+	final static String APPLICANT_UPDATE_PASSWORD =  "/{username}/update-pwd";
 
 		// Delete
 //	final static String PUBLIC_CNTROLLER = "/public";

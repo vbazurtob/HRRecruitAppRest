@@ -1,6 +1,8 @@
 package org.vbazurtob.hrrecruitapp.rest.controllers;
 
 import com.sun.javafx.font.directwrite.RECT;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.actuate.autoconfigure.metrics.MetricsProperties;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -20,6 +22,8 @@ import java.util.Date;
 @ControllerAdvice
 public class ResponseErrorHandler extends ResponseEntityExceptionHandler {
 
+    private Logger logger = LoggerFactory.getLogger(ResponseErrorHandler.class);
+
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
 
@@ -35,6 +39,7 @@ public class ResponseErrorHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public final ResponseEntity<Object> handleAllExceptions(Exception ex, WebRequest request) {
+        logger.error(ex.getMessage());
         ErrorDetails errorDetails = new ErrorDetails(  ex.getMessage(),
                 request.getDescription(false));
         return new ResponseEntity( errorDetails , HttpStatus.INTERNAL_SERVER_ERROR );

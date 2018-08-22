@@ -6,11 +6,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.vbazurtob.hrrecruitapp.rest.lib.common.RecordAlreadyExists;
-import org.vbazurtob.hrrecruitapp.rest.model.ApplicantWithPassword;
-import org.vbazurtob.hrrecruitapp.rest.model.ApplicantWithoutPassword;
-import org.vbazurtob.hrrecruitapp.rest.model.NewApplicantForm;
+import org.vbazurtob.hrrecruitapp.rest.model.*;
 import org.vbazurtob.hrrecruitapp.rest.model.repository.ApplicantRepository;
 import org.vbazurtob.hrrecruitapp.rest.model.response.RestServiceStatus;
 import org.vbazurtob.hrrecruitapp.rest.model.service.ApplicantService;
@@ -67,5 +66,61 @@ public class ApplicantRestController {
     }
 
 
+    @PutMapping(APPLICANT_UPDATE)
+    public ApplicantBaseClass editApplicant(
+            @Valid @RequestBody ApplicantWithoutPassword postApplicant
+
+    ){
+
+        ApplicantWithPassword applicant = applicantRepository.findOneByUsername(postApplicant.getUsername());
+        if ( applicant == null){
+            throw new ResourceNotFoundException("Username " + postApplicant.getUsername() + " not found in db. " );
+        }
+
+        ApplicantWithPassword updatedApplicant = (ApplicantWithPassword) applicantService.updateApplicantProfile(postApplicant);
+        return applicantService.getApplicantInfoWithoutPassword(updatedApplicant);
+
+    }
+
+    @DeleteMapping(APPLICANT_DELETE)
+    public ResponseEntity<?> deleteApplicant(
+            @PathVariable("username") String username
+    ){
+
+        ApplicantWithPassword applicant = applicantRepository.findOneByUsername(username);
+        if ( applicant == null){
+            throw new ResourceNotFoundException("Username " + username + " not found in db. " );
+        }
+
+        applicantRepository.delete(applicant);
+
+        return ResponseEntity.ok().build();
+
+    }
+
+    @PutMapping(APPLICANT_UPDATE_PASSWORD)
+    public ResponseEntity<?> applicantUpdatePwd(
+
+            @PathVariable("username") String username,
+            @Valid @RequestBody ApplicantChangePasswordForm chgPwdForm
+
+    ){
+        if(username == null ){
+            throw new RuntimeException("An applicant user was not provided!");
+        }
+
+        chgPwdForm.setUsernameChangePwdForm(username);
+
+        if ( applicantService.currentApplicantPasswordMatch(chgPwdForm.getUsernameChangePwdForm(),  chgPwdForm.getCurrentPassword()) == false ) {
+            throw new RuntimeException("Failed to specify current password! Operation denied!");
+        }
+
+        if ( applicantService.updatePassword(chgPwdForm.getUsernameChangePwdForm(), chgPwdForm.getPassword(), chgPwdForm.getPasswordConfirmation()) ) {
+            return ResponseEntity.ok().build();
+        }else {
+            throw new RuntimeException("Failed to update password");
+        }
+
+    }
 
 }

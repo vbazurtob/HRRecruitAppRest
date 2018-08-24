@@ -1,4 +1,5 @@
 package org.vbazurtob.hrrecruitapp.rest.model;
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Id;
@@ -11,7 +12,7 @@ import javax.validation.constraints.Size;
 
 
 @MappedSuperclass
-public class ApplicantBaseClass {
+public class ApplicantBaseClass implements Serializable {
 
 
 	@Id
@@ -180,7 +181,7 @@ public class ApplicantBaseClass {
 
 	@Override
 	public String toString() {
-		return "ApplicantProfileForm [username=" + username + ", address1=" + address1 + ", address2=" + address2
+		return "ApplicantBaseClass [username=" + username + ", address1=" + address1 + ", address2=" + address2
 				+ ", country=" + country + ", email=" + email + ", lastname=" + lastname + ", names=" + names
 				+ ", state=" + state + ", zipcode=" + zipcode + "]";
 	}

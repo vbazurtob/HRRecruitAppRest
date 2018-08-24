@@ -38,7 +38,13 @@ public class ApplicantWithPassword extends ApplicantBaseClass implements Seriali
 	}
 
 
+	@Override
+	public String toString() {
+		return "ApplicantWithPassword{ " +
 
-	
+				super.toString()
 
+				+
+				" }";
+	}
 }

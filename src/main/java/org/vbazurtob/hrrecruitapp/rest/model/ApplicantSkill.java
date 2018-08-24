@@ -118,7 +118,13 @@ public class ApplicantSkill implements Serializable {
 			return false;
 		return true;
 	}
-	
-	
 
+	@Override
+	public String toString() {
+		return "ApplicantSkill{" +
+				"id=" + id +
+				", name='" + name + '\'' +
+				", proficiency=" + proficiency +
+				'}';
+	}
 }

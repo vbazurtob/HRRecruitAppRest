@@ -12,7 +12,7 @@ public class Utils {
 	
 	public static void printFormErrors( BindingResult results ) {
 		
-//		 DEBUG form Validations
+				//		 DEBUG form Validations
 				System.out.println("Errors? " + results.hasErrors() );
 				
 				List<ObjectError> oes = results.getAllErrors();

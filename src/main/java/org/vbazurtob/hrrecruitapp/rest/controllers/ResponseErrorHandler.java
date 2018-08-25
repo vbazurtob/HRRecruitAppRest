@@ -1,9 +1,7 @@
 package org.vbazurtob.hrrecruitapp.rest.controllers;
 
-import com.sun.javafx.font.directwrite.RECT;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.boot.actuate.autoconfigure.metrics.MetricsProperties;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +14,6 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import org.vbazurtob.hrrecruitapp.rest.lib.common.ErrorDetails;
 import org.vbazurtob.hrrecruitapp.rest.lib.common.RecordAlreadyExists;
 
-import java.util.Date;
 
 @RestController
 @ControllerAdvice

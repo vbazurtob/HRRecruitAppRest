@@ -6,12 +6,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.vbazurtob.hrrecruitapp.rest.lib.common.RecordAlreadyExists;
 import org.vbazurtob.hrrecruitapp.rest.model.*;
 import org.vbazurtob.hrrecruitapp.rest.model.repository.ApplicantRepository;
-import org.vbazurtob.hrrecruitapp.rest.model.response.RestServiceStatus;
 import org.vbazurtob.hrrecruitapp.rest.model.service.ApplicantService;
 
 import javax.validation.Valid;
@@ -31,11 +29,6 @@ public class ApplicantRestController {
     @Autowired
     private ApplicantService applicantService;
 
-    @GetMapping(APPLICANT_STATUS_SERVICE)
-    public RestServiceStatus testService(){
-        RestServiceStatus rs = new RestServiceStatus( "up", "Service accepting requests" );
-        return rs;
-    }
 
     @GetMapping(APPLICANT_GET_BY_USERNAME)
     public ResponseEntity<ApplicantWithoutPassword>  retrieveApplicantById(
@@ -61,6 +54,7 @@ public class ApplicantRestController {
             throw new RecordAlreadyExists("Username " + postApplicant.getUsername() + " already exists in db. " );
         }
 
+
         ApplicantWithPassword newApplicant = applicantService.createNewApplicantInDB(postApplicant.getUsername(), postApplicant.getPassword(), postApplicant.getEmail());
         return ResponseEntity.created(URI.create( ROOT_API + REST_APPLICANT_CNTROLLER  + "/" + newApplicant.getUsername() ) ).build();
     }
@@ -68,13 +62,15 @@ public class ApplicantRestController {
 
     @PutMapping(APPLICANT_UPDATE)
     public ApplicantBaseClass editApplicant(
-            @Valid @RequestBody ApplicantWithoutPassword postApplicant
+            @Valid @RequestBody ApplicantWithoutPassword postApplicant,
+            @PathVariable("username") String username
 
     ){
 
-        ApplicantWithPassword applicant = applicantRepository.findOneByUsername(postApplicant.getUsername());
+        postApplicant.setUsername(username);
+        ApplicantWithPassword applicant = applicantRepository.findOneByUsername(username);
         if ( applicant == null){
-            throw new ResourceNotFoundException("Username " + postApplicant.getUsername() + " not found in db. " );
+            throw new ResourceNotFoundException("Username " + username + " not found in db. " );
         }
 
         ApplicantWithPassword updatedApplicant = (ApplicantWithPassword) applicantService.updateApplicantProfile(postApplicant);

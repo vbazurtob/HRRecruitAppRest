@@ -28,9 +28,9 @@ public class AppSecurityConfig  {
 
 			http
 			.authorizeRequests()
+					.antMatchers( ROOT_SERVER).permitAll()
 			.antMatchers( INDEX_PAGE).permitAll()
 			.antMatchers(ROOT_API  +  "/**").permitAll()
-			//.antMatchers(CSS_FOLDER + "**", JS_FOLDER + "**", IMG_FOLDER + "**").permitAll()
 			.anyRequest().authenticated()
 
 			.and().csrf().disable()

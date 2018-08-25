@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>List of REST endpoints</title>
+
+    <style>
+        body {
+            font-family: 'DejaVu Sans', Arial, Helvetica, sans-serif;
+        }
+        .code {
+            font-family: 'DejaVu Sans Mono', monospace;
+        }
+
+    </style>
+</head>
+<body>
+
+<p>
+    REST endpoints for HRRecruitApp project using Spring Boot<br>
+    Author: Voltaire Bazurto Blacio<br>
+    All rights reserved 2018
+</p>
+
+
+<br>
+<h3>Applicant endpoints</h3>
+
+<ul>
+    <li>
+        <p>
+            GET /api/applicant/{username}
+        </p>
+
+        <p>
+        <h5>Params</h5>
+        {username} String
+        </p>
+
+    </li>
+
+    <li>
+        <p>
+        POST /api/applicant/new
+        </p>
+
+        <p>
+
+            <h5>Params</h5>
+
+            <p>
+                RequestBody<br>
+                Application/JSON;UTF-8
+            </p>
+
+            <div class="code">
+
+                {
+                "username": "demo123456784",
+                "password": "A123abc456+",
+                "passwordConfirmation": "A123abc456+",
+                "email": "cv@mm.com"
+                }
+            </div>
+
+        </p>
+
+    </li>
+
+    <li>
+        <p>
+            PUT /api/applicant/{username}
+        </p>
+
+        <p>
+
+            <h5>Params</h5>
+
+            {username} String
+
+
+            <p>
+                RequestBody<br>
+                Application/JSON;UTF-8
+            </p>
+
+            <div class="code">
+
+
+                {
+                "username": "demo123456784",
+                "address1": "MX",
+                "address2": ".",
+                "country": ". ",
+                "email": "cv@mm.com",
+                "lastname": "Test22",
+                "names": "Demo test",
+                "state": "aa",
+                "zipcode": "."
+                }
+            </div>
+
+        </p>
+
+    </li>
+
+
+    <li>
+        <p>
+            DELETE /api/applicant/{username}
+        </p>
+
+        <p>
+
+        <h5>Params</h5>
+
+        {username} String
+
+    </li>
+
+    <li>
+        <p>
+            PUT /api/applicant/{username}/update-pwd
+        </p>
+
+        <p>
+
+        <h5>Params</h5>
+
+        {username} String
+
+        <p>
+            RequestBody<br>
+            Application/JSON;UTF-8
+        </p>
+
+        <div class="code">
+            {
+                "usernameChangePwdForm": "demo123456784",
+                "currentPassword": "A123abc456+",
+                "password": "A12132d43+++1",
+                "passwordConfirmation": "A12132d43+++"
+            }
+
+        </div>
+
+
+
+    </li>
+
+</ul>
+
+<h3>Applicant Skills endpoints</h3>
+
+<ul>
+    <li>
+        <p>
+            GET /api/skills/{username}
+        </p>
+
+        <p>
+        <h5>Params</h5>
+        {username} String<br>
+        {page} Optional Integer<br>
+        {rows} Optional Integer<br>
+
+        </p>
+
+    </li>
+
+
+    <li>
+        <p>
+            POST /api/skills/{username}/new
+        </p>
+
+        <p>
+
+            <h5>Params</h5>
+
+            <p>
+                RequestBody<br>
+                Application/JSON;UTF-8
+            </p>
+
+            <div class="code">
+                {
+                    "name": "Objective C",
+                    "proficiency": 4
+                }
+            </div>
+
+        </p>
+
+    </li>
+
+    <li>
+        <p>
+            PUT /api/skills/{id}
+        </p>
+
+        <p>
+
+        <h5>Params</h5>
+
+        {id} Long
+
+
+        <p>
+            RequestBody<br>
+            Application/JSON;UTF-8
+        </p>
+
+        <div class="code">
+            {
+            "name": "F#",
+            "proficiency": 3
+            }
+        </div>
+
+        </p>
+
+    </li>
+
+
+    <li>
+        <p>
+            DELETE /api/skills/{id}
+        </p>
+
+        <p>
+
+        <h5>Params</h5>
+
+        {id} Long
+
+    </li>
+
+
+</ul>
+
+
+
+</body>
+</html>

@@ -1,1 +1,1 @@
-web: java -Dserver.port=$PORT $JAVA_OPTS -jar target/HRRecruitApp-1.war 
+web: java -Dserver.port=$PORT $JAVA_OPTS -jar target/hrrecruitapprest-1.0.0.jar

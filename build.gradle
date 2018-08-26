@@ -1,4 +1,4 @@
-def profiles = 'dev'
+def profiles = 'release'
 
 
 
